@@ -5,3 +5,5 @@
 		git status
 		git log  git log --pretty=oneline
 		git reset --hard HEAD^ 版本回退
+		
+		
