@@ -1,0 +1,66 @@
+spring:
+    application:
+        name: iot-mirrorservice
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+        default-property-inclusion: non_null
+        serialization:
+          indent-output: true
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+      database: mysql
+    datasource:
+        name: mirror_db
+        url: jdbc:mysql://${IOT_MYSQL_HOST_WRISTBAND:39.98.228.131}:${IOT_MYSQL_PORT_WRISTBAND:3309}/${IOT_MYSQL_DATABASE_WRISTBAND:iot_rawdata_jd_demo}?useUnicode=true&characterEncoding=UTF8
+        username: ${IOT_MYSQL_USERNAME_WRISTBAND:IOTUser}
+        password: ${IOT_MYSQL_PASSWORD_WRISTBAND:LuV*Cdb*c3*SNXhY}
+        # 使用druid数据源
+       # type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        filters: stat
+        maxActive: 20
+        initialSize: 1
+        maxWait: 60000
+        minIdle: 1
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: select 'x'
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxOpenPreparedStatements: 20
+rabbitmq:
+  host: ${IOT_RABBIT_MQ_HOST:47.92.212.32}
+  port:  ${IOT_RABBIT_MQ_PORT:5672}
+  username: ${IOT_RABBIT_MQ_USERNAME:superrd}
+  password: ${IOT_RABBIT_MQ_PASSWORD:V4*GvdTr}
+  exchange:
+    name:  ${IOT_RABBIT_MQ_EXCHANGE_NAME:qingta}
+
+server:
+    port: ${IOT_RECEIVER_PORT_WRISTBAND:9953}
+#redis-cache 相关
+redis:
+    pool:
+         maxActive: 300
+         maxIdle: 100
+         maxWait: 1000
+    host: ${IOT_REDIS_HOST:localhost}
+    port:  ${IOT_REDIS_PORT:6379}
+    password: ${IOT_REDIS_PASSWORD:123456}
+    timeout: 2000
+    # 服务或应用名
+    sysName: iot-wristbandservice
+    enable: true
+    database: 0
+# queue
+#exchange:
+#  name: qingta
+
+info:
+  tenant_id: ${IOT_RECEIVER_TENANT_ID_WRISTBAND:2c697754-2bae-40c3-85c7-94edc062c382}
+  device_type_id:  ${IOT_RECEIVER_DEVICE_TYPE_ID_WRISTBAND:35b1bcc5-1963-11e9-8ff5-00163e0260d7}
