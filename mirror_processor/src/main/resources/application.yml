@@ -14,7 +14,7 @@ spring:
       database: mysql
     datasource:
         name: mirror_db
-        url: jdbc:mysql://${IOT_MYSQL_HOST_WRISTBAND:39.98.228.131}:${IOT_MYSQL_PORT_WRISTBAND:3309}/${IOT_MYSQL_DATABASE_WRISTBAND:iot_rawdata_jd_demo}?useUnicode=true&characterEncoding=UTF8
+        url: jdbc:mysql://${IOT_MYSQL_HOST_WRISTBAND:39.98.228.131}:${IOT_MYSQL_PORT_WRISTBAND:3309}/${IOT_MYSQL_DATABASE_WRISTBAND:iot_platform_dev}?useUnicode=true&characterEncoding=UTF8
         username: ${IOT_MYSQL_USERNAME_WRISTBAND:IOTUser}
         password: ${IOT_MYSQL_PASSWORD_WRISTBAND:LuV*Cdb*c3*SNXhY}
         # 使用druid数据源
@@ -42,7 +42,7 @@ rabbitmq:
     name:  ${IOT_RABBIT_MQ_EXCHANGE_NAME:qingta}
 
 server:
-    port: ${IOT_RECEIVER_PORT_WRISTBAND:9953}
+    port: ${IOT_RECEIVER_PORT_WRISTBAND:8082}
 #redis-cache 相关
 redis:
     pool:
@@ -64,3 +64,17 @@ redis:
 info:
   tenant_id: ${IOT_RECEIVER_TENANT_ID_WRISTBAND:2c697754-2bae-40c3-85c7-94edc062c382}
   device_type_id:  ${IOT_RECEIVER_DEVICE_TYPE_ID_WRISTBAND:35b1bcc5-1963-11e9-8ff5-00163e0260d7}
+
+mqtt:
+  host: tcp://apollo-web.v.laikang.com:61613
+  clientinid: client_12123fff
+  clientoutid: client_12123fff
+  topic: jd-4edc6376-d18b-5d58-a82e-ac00d8081646
+  qoslevel: 1
+  username: mirror
+  password: mirror3124
+  timeout: 10000
+  keepalive: 20
+
+wecaring:
+  host: ${WECARING_HOST:http://localhost:8090/parser/deviceuser}
