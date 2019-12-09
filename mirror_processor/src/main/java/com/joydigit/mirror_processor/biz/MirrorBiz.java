@@ -63,55 +63,58 @@ public class MirrorBiz {
         JSONObject healthData = new JSONObject();
         JSONObject customerInfo = new JSONObject();
         JSONArray physicalList = new JSONArray();
-        //
-        // 获取customerID 和 projectID
-        CustomerInfo customerInfoVo = _customerInfoMapper.selectCustomerIdAndProjectIdBydDevice(examModel.getBody().get(0).getExam_sourcecode());
-        //
-        customerInfo.put("CustomerId",parseString(customerInfoVo.getCustomerId()));
-        customerInfo.put("ProjectId", parseString(customerInfoVo.getProjectId()));
-        WeCaringVo weCaring = new WeCaringVo();
-        weCaring.setExam_diseasename(examModel.getBody().get(0).getExam_diseasename()); //分析结果
-        weCaring.setExam_conclusion(examModel.getBody().get(0).getExam_conclusion()); //分析结果详情
-        weCaring.setExamEvaluation(examModel.getBody().get(0).getExam_evaluation()); // 分数
-        List<Devices> devices = examModel.getBody().get(0).getDevices();
-        for (Devices device: devices){
-            List<Items> items = device.getItems();
-            for (Items item : items){
-                if (item.getIndi_name().equals("局部特征")){
-                    weCaring.setFaceFeature(item.getItem_value());
-                }
-                if (item.getIndi_name().equals("光泽")){
-                    weCaring.setReflet(item.getItem_value());
-                }
-                if (item.getIndi_name().equals("面色")){
-                    weCaring.setComplexion(item.getItem_value());
-                }
-                if (item.getIndi_name().equals("唇色")){
-                    weCaring.setLipColor(item.getItem_value());
-                }
-                if (item.getIndi_name().equals("舌色")){
-                    weCaring.setTongueColor(item.getItem_value());
-                }
-                if (item.getIndi_name().equals("舌形")){
-                    weCaring.setTongueFurShape(item.getItem_value());
-                }
-                if (item.getIndi_name().equals("苔色")){
-                    weCaring.setTongueFurColor(item.getItem_value());
-                }
-                if (item.getIndi_name().equals("舌苔形质")){
-                    weCaring.setTongueFurShape(item.getItem_value());
-                }
+        String result = null;
+        if (examModel.getBody().size() != 0) {
 
+            CustomerInfo customerInfoVo = _customerInfoMapper.selectCustomerIdAndProjectIdBydDevice(examModel.getBody().get(0).getExam_sourcecode());
+            // 获取customerID 和 projectID
+            customerInfo.put("CustomerId", parseString(customerInfoVo.getCustomerId()));
+            customerInfo.put("ProjectId", parseString(customerInfoVo.getProjectId()));
+            WeCaringVo weCaring = new WeCaringVo();
+            weCaring.setExam_diseasename(examModel.getBody().get(0).getExam_diseasename()); //分析结果
+            weCaring.setExam_conclusion(examModel.getBody().get(0).getExam_conclusion()); //分析结果详情
+            weCaring.setExamEvaluation(examModel.getBody().get(0).getExam_evaluation()); // 分数
+            List<Devices> devices = examModel.getBody().get(0).getDevices();
+            for (Devices device : devices) {
+                List<Items> items = device.getItems();
+                for (Items item : items) {
+                    if (item.getIndi_name().equals("局部特征")) {
+                        weCaring.setFaceFeature(item.getItem_value());
+                    }
+                    if (item.getIndi_name().equals("光泽")) {
+                        weCaring.setReflet(item.getItem_value());
+                    }
+                    if (item.getIndi_name().equals("面色")) {
+                        weCaring.setComplexion(item.getItem_value());
+                    }
+                    if (item.getIndi_name().equals("唇色")) {
+                        weCaring.setLipColor(item.getItem_value());
+                    }
+                    if (item.getIndi_name().equals("舌色")) {
+                        weCaring.setTongueColor(item.getItem_value());
+                    }
+                    if (item.getIndi_name().equals("舌形")) {
+                        weCaring.setTongueFurShape(item.getItem_value());
+                    }
+                    if (item.getIndi_name().equals("苔色")) {
+                        weCaring.setTongueFurColor(item.getItem_value());
+                    }
+                    if (item.getIndi_name().equals("舌苔形质")) {
+                        weCaring.setTongueFurShape(item.getItem_value());
+                    }
+
+                }
             }
+            //physicalList.add(getPhysicalItem(healthDataMap,new String[]{"Breath","Bed","Warn","Heartrate1","Turn"}));
+            physicalList.add(weCaring);
+            healthData.put("customerInfo", customerInfo);
+            healthData.put("physicalList", physicalList);
+            healthData.put("deviceId", "6"); //设备名: 6-中医镜
+            healthData.put("physicalTime", parseString(examModel.getBody().get(0).getExam_time())); //physical_time
+            healthDataList.add(healthData);
+            result = JSON.toJSONString(healthDataList, SerializerFeature.DisableCircularReferenceDetect);
+
         }
-        //physicalList.add(getPhysicalItem(healthDataMap,new String[]{"Breath","Bed","Warn","Heartrate1","Turn"}));
-        physicalList.add(weCaring);
-        healthData.put("customerInfo",customerInfo);
-        healthData.put("physicalList",physicalList);
-        healthData.put("deviceId","6"); //设备名: 6-中医镜
-        healthData.put("physicalTime",parseString(examModel.getBody().get(0).getExam_time())); //physical_time
-        healthDataList.add(healthData);
-        String result = JSON.toJSONString(healthDataList, SerializerFeature.DisableCircularReferenceDetect);
         return result;
     }
 

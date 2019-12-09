@@ -1,25 +1,12 @@
 package com.joydigit.mirror_processor.entity;
 
+import lombok.Data;
+
 /**
  * create by 75442 on 2019/11/29
  */
+@Data
 public class CustomerInfo {
     private String CustomerId;
     private String ProjectId;
-
-    public String getCustomerId() {
-        return CustomerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        CustomerId = customerId;
-    }
-
-    public String getProjectId() {
-        return ProjectId;
-    }
-
-    public void setProjectId(String projectId) {
-        ProjectId = projectId;
-    }
 }
