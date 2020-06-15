@@ -69,4 +69,11 @@ public class BrandService {
             throw new LyException(ExceptionEnum.BRAND_SAVE_ERROR);
         }
     }
+
+    public List<Brand> queryBrandByCid(Long cid) {
+
+        //brandMapper.select(brand)
+        return null;
+
+    }
 }

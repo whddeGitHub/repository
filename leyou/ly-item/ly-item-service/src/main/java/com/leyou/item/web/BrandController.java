@@ -51,5 +51,12 @@ public class BrandController {
         return ResponseEntity.status(HttpStatus.CREATED).build();//新增成功返回CREATED，.build()表示没有返回值
     }
 
+    @GetMapping("/cid/{cid}")
+    public ResponseEntity<List<Brand>> queryBrandByCid(@PathVariable("cid") Long cid){
+
+        return ResponseEntity.ok(brandService.queryBrandByCid(cid));
+    }
+
+
 
 }
