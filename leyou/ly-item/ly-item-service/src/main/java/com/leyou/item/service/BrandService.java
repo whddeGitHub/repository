@@ -72,8 +72,11 @@ public class BrandService {
 
     public List<Brand> queryBrandByCid(Long cid) {
 
-        //brandMapper.select(brand)
-        return null;
+        //涉及中间表，需要多表查询
+        List<Brand> brands = brandMapper.queryByCategoryId(cid);
+        if (CollectionUtils.isEmpty(brands))
+            throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
+        return brands;
 
     }
 }
